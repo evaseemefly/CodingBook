@@ -1,3 +1,3 @@
-一、简述 Go 语言背景和发展 软件开发的新挑战 多核...
-
-极客时间版权所有: https://time.geekbang.org/course/detail/160-84355
+备份汇总的知识点在  
+[我在这](https://github.com/evaseemefly/go-/tree/master/goinaction/code/chapter2)  
+以后会迁移至此

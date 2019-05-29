@@ -6,6 +6,33 @@ python 的知识点图谱
 
 ### 列表和元组
 
+对已经存在的元祖，可以重新创建新的元祖并为其添加元素
+eg:
+
+```python
+tup = (1, 2, 3, 4)
+new_tup = tup + (5, ) # 创建新的元组 new_tup，并依次填充原元组的值
+new _tup
+(1, 2, 3, 4, 5)
+
+l = [1, 2, 3, 4]
+l.append(5) # 添加元素 5 到原列表的末尾
+l
+[1, 2, 3, 4, 5]
+
+```
+
+列表与元组之间的相互转换
+
+```python
+list((1, 2, 3))
+[1, 2, 3]
+
+tuple([1, 2, 3])
+(1, 2, 3)
+
+```
+
 几个内置函数  
 `count(item)` 表示统计列表 / 元组中 item 出现的次数。  
 `index(item)` 表示返回列表 / 元组中 item 第一次出现的索引  
@@ -72,4 +99,78 @@ python -m timeit 'empty_list = []'
 
 python -m timeit 'empty_list = ()'
 # 100000000 loops, best of 3: 0.0126 usec per loop
+```
+
+### 字典和集合基础
+
+`字典`从 python3.7 开始，字典被确定为有序的（3.6 之前是无序的）
+
+```python
+d1 = {'name': 'jason', 'age': 20, 'gender': 'male'}
+d2 = dict({'name': 'jason', 'age': 20, 'gender': 'male'})
+d3 = dict([('name', 'jason'), ('age', 20), ('gender', 'male')])
+d4 = dict(name='jason', age=20, gender='male')
+d1 == d2 == d3 ==d4
+True
+
+s1 = {1, 2, 3}
+s2 = set([1, 2, 3])
+s1 == s2
+True
+
+```
+
+通过 key 来索引字典可以使用`get(key,def)`
+
+```python
+d = {'name': 'jason', 'age': 20}
+d.get('name')
+'jason'
+d.get('location', 'null')
+'null'
+
+```
+
+`集合（set）`不支持索引操作，集合本质是一个`哈希表`
+判断指定元素是否在字典或集合内，可以使用 `val in dict/set` 的方式
+eg:
+
+```python
+s = {1, 2, 3}
+1 in s
+True
+10 in s
+False
+
+d = {'name': 'jason', 'age': 20}
+'name' in d
+True
+'location' in d
+False
+
+```
+
+字典与集合均支持增删改查操作：
+_注意 dict 与 set 的增加与删除操作的方法不同_
+
+```python
+d = {'name': 'jason', 'age': 20}
+d['gender'] = 'male' # 增加元素对'gender': 'male'
+d['dob'] = '1999-02-01' # 增加元素对'dob': '1999-02-01'
+d
+{'name': 'jason', 'age': 20, 'gender': 'male', 'dob': '1999-02-01'}
+d['dob'] = '1998-01-01' # 更新键'dob'对应的值
+d.pop('dob') # 删除键为'dob'的元素对
+'1998-01-01'
+d
+{'name': 'jason', 'age': 20, 'gender': 'male'}
+
+s = {1, 2, 3}
+s.add(4) # 增加元素 4 到集合
+s
+{1, 2, 3, 4}
+s.remove(4) # 从集合中删除元素 4
+s
+{1, 2, 3}
+
 ```

@@ -149,3 +149,61 @@ func TestTravelMap(t *testing.T) {
     map_test.go:33: 3 9
 PASS
 ```
+
+### 10 使用map实现工厂模式  
+注意下面的工厂模式，方法签名需要相同
+( * 若想实现重载如何实现？ * )
+```go
+func TestMapWithFunValue(t *testing.T) {
+	m := map[int]func(op int) int{}
+	m[1] = func(op int) int { return op }
+	m[2] = func(op int) int { return op * op }
+	m[3] = func(op int) int { return op * op * op }
+	t.Log(m[1](2), m[2](2), m[3](2))
+}
+```
+
+```
+=== RUN   TestMapWithFunValue
+--- PASS: TestMapWithFunValue (0.00s)
+    map_ext_test.go:10: 2 4 8
+```
+
+实现set，即不能有重复值出现的字典  
+go的内置集合中没有实现Set，需要通过`map[type]bool`的方式实现  
+1. 元素的唯一性
+2. 基本操作  
+	1-添加元素
+	2-判断元素是否存在
+	3-删除元素
+	4-元素个数
+```go
+
+func TestMapForSet(t *testing.T) {
+	mySet := map[int]bool{}
+	mySet[1] = true
+	n := 3
+	if mySet[n] {
+		t.Logf("%d is existing", n)
+	} else {
+		t.Logf("%d is not existing", n)
+	}
+	mySet[3] = true
+	t.Log(len(mySet))
+	delete(mySet, 1)
+	n = 1
+	if mySet[n] {
+		t.Logf("%d is existing", n)
+	} else {
+		t.Logf("%d is not existing", n)
+	}
+}
+```
+
+```
+=== RUN   TestMapForSet
+--- PASS: TestMapForSet (0.00s)
+    map_ext_test.go:20: 3 is not existing
+    map_ext_test.go:23: 2
+    map_ext_test.go:29: 1 is not existing
+```

@@ -174,3 +174,105 @@ s
 {1, 2, 3}
 
 ```
+
+对字典或集合进行排序  
+对于字典会根据key或val进行升序或降序排列：  
+```python
+d = {'b': 1, 'a': 2, 'c': 10}
+d_sorted_by_key = sorted(d.items(), key=lambda x: x[0]) # 根据字典键的升序排序
+d_sorted_by_value = sorted(d.items(), key=lambda x: x[1]) # 根据字典值的升序排序
+d_sorted_by_key
+[('a', 2), ('b', 1), ('c', 10)]
+d_sorted_by_value
+[('b', 1), ('a', 2), ('c', 10)]
+
+```
+对于集合的排序  
+```python
+s = {3, 4, 2, 1}
+sorted(s) # 对集合的元素进行升序排序
+[1, 2, 3, 4]
+
+```
+
+eg：
+    要找出这些商品有多少种不同的价格
+    使用列表与set的区别如下：
+
+```python 
+# list version
+def find_unique_price_using_list(products):
+    unique_price_list = []
+    for _, price in products: # A
+        if price not in unique_price_list: #B
+            unique_price_list.append(price)
+    return len(unique_price_list)
+
+products = [
+    (143121312, 100), 
+    (432314553, 30),
+    (32421912367, 150),
+    (937153201, 30)
+]
+print('number of unique price is: {}'.format(find_unique_price_using_list(products)))
+
+# 输出
+number of unique price is: 3
+
+```
+
+```python
+# set version
+def find_unique_price_using_set(products):
+    unique_price_set = set()
+    for _, price in products:
+        unique_price_set.add(price)
+    return len(unique_price_set)        
+
+products = [
+    (143121312, 100), 
+    (432314553, 30),
+    (32421912367, 150),
+    (937153201, 30)
+]
+print('number of unique price is: {}'.format(find_unique_price_using_set(products)))
+
+# 输出
+number of unique price is: 3
+
+```
+
+两者在时间复杂度上差异明显：
+```python
+import time
+id = [x for x in range(0, 100000)]
+price = [x for x in range(200000, 300000)]
+products = list(zip(id, price))
+
+# 计算列表版本的时间
+start_using_list = time.perf_counter()
+find_unique_price_using_list(products)
+end_using_list = time.perf_counter()
+print("time elapse using list: {}".format(end_using_list - start_using_list))
+## 输出
+time elapse using list: 41.61519479751587
+
+# 计算集合版本的时间
+start_using_set = time.perf_counter()
+find_unique_price_using_set(products)
+end_using_set = time.perf_counter()
+print("time elapse using set: {}".format(end_using_set - start_using_set))
+# 输出
+time elapse using set: 0.008238077163696289
+
+```
+
+*Q*:  
+字典的k可以使一个列表吗？  
+eg：
+```python
+d = {'name': 'jason', ['education']: ['Tsinghua University', 'Stanford University']}
+
+```
+*A*:
+不可以，字典的key要求是不可变的，而list是可变类型

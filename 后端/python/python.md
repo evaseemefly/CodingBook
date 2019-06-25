@@ -176,7 +176,8 @@ s
 ```
 
 对字典或集合进行排序  
-对于字典会根据key或val进行升序或降序排列：  
+对于字典会根据 key 或 val 进行升序或降序排列：
+
 ```python
 d = {'b': 1, 'a': 2, 'c': 10}
 d_sorted_by_key = sorted(d.items(), key=lambda x: x[0]) # 根据字典键的升序排序
@@ -187,7 +188,9 @@ d_sorted_by_value
 [('b', 1), ('a', 2), ('c', 10)]
 
 ```
-对于集合的排序  
+
+对于集合的排序
+
 ```python
 s = {3, 4, 2, 1}
 sorted(s) # 对集合的元素进行升序排序
@@ -196,10 +199,10 @@ sorted(s) # 对集合的元素进行升序排序
 ```
 
 eg：
-    要找出这些商品有多少种不同的价格
-    使用列表与set的区别如下：
+要找出这些商品有多少种不同的价格
+使用列表与 set 的区别如下：
 
-```python 
+```python
 # list version
 def find_unique_price_using_list(products):
     unique_price_list = []
@@ -209,7 +212,7 @@ def find_unique_price_using_list(products):
     return len(unique_price_list)
 
 products = [
-    (143121312, 100), 
+    (143121312, 100),
     (432314553, 30),
     (32421912367, 150),
     (937153201, 30)
@@ -227,10 +230,10 @@ def find_unique_price_using_set(products):
     unique_price_set = set()
     for _, price in products:
         unique_price_set.add(price)
-    return len(unique_price_set)        
+    return len(unique_price_set)
 
 products = [
-    (143121312, 100), 
+    (143121312, 100),
     (432314553, 30),
     (32421912367, 150),
     (937153201, 30)
@@ -243,6 +246,7 @@ number of unique price is: 3
 ```
 
 两者在时间复杂度上差异明显：
+
 ```python
 import time
 id = [x for x in range(0, 100000)]
@@ -267,15 +271,17 @@ time elapse using set: 0.008238077163696289
 
 ```
 
-*Q*:  
-字典的k可以使一个列表吗？  
+_Q_:  
+字典的 k 可以使一个列表吗？  
 eg：
+
 ```python
 d = {'name': 'jason', ['education']: ['Tsinghua University', 'Stanford University']}
 
 ```
-*A*:
-不可以，字典的key要求是不可变的，而list是可变类型
+
+_A_:
+不可以，字典的 key 要求是不可变的，而 list 是可变类型
 
 ### 字典和集合基础
 
@@ -352,7 +358,8 @@ s
 ```
 
 对字典或集合进行排序  
-对于字典会根据key或val进行升序或降序排列：  
+对于字典会根据 key 或 val 进行升序或降序排列：
+
 ```python
 d = {'b': 1, 'a': 2, 'c': 10}
 d_sorted_by_key = sorted(d.items(), key=lambda x: x[0]) # 根据字典键的升序排序
@@ -363,7 +370,9 @@ d_sorted_by_value
 [('b', 1), ('a', 2), ('c', 10)]
 
 ```
-对于集合的排序  
+
+对于集合的排序
+
 ```python
 s = {3, 4, 2, 1}
 sorted(s) # 对集合的元素进行升序排序
@@ -372,10 +381,10 @@ sorted(s) # 对集合的元素进行升序排序
 ```
 
 eg：
-    要找出这些商品有多少种不同的价格
-    使用列表与set的区别如下：
+要找出这些商品有多少种不同的价格
+使用列表与 set 的区别如下：
 
-```python 
+```python
 # list version
 def find_unique_price_using_list(products):
     unique_price_list = []
@@ -385,7 +394,7 @@ def find_unique_price_using_list(products):
     return len(unique_price_list)
 
 products = [
-    (143121312, 100), 
+    (143121312, 100),
     (432314553, 30),
     (32421912367, 150),
     (937153201, 30)
@@ -403,10 +412,10 @@ def find_unique_price_using_set(products):
     unique_price_set = set()
     for _, price in products:
         unique_price_set.add(price)
-    return len(unique_price_set)        
+    return len(unique_price_set)
 
 products = [
-    (143121312, 100), 
+    (143121312, 100),
     (432314553, 30),
     (32421912367, 150),
     (937153201, 30)
@@ -419,6 +428,7 @@ number of unique price is: 3
 ```
 
 两者在时间复杂度上差异明显：
+
 ```python
 import time
 id = [x for x in range(0, 100000)]
@@ -443,16 +453,17 @@ time elapse using set: 0.008238077163696289
 
 ```
 
-*Q*:  
-字典的k可以使一个列表吗？  
+_Q_:  
+字典的 k 可以使一个列表吗？  
 eg：
+
 ```python
 d = {'name': 'jason', ['education']: ['Tsinghua University', 'Stanford University']}
 
 ```
-*A*:
-不可以，字典的key要求是不可变的，而list是可变类型
 
+_A_:
+不可以，字典的 key 要求是不可变的，而 list 是可变类型
 
 ### 排序
 
@@ -697,3 +708,216 @@ answer:
 ```python
 [dict(zip(attributes,v)) for v in values]
 ```
+
+### 八、异常处理
+
+在 except block 中加入多种异常的类型有两种方式：
+方式 1：
+
+```python
+try:
+    s = input('please enter two numbers separated by comma: ')
+    num1 = int(s.split(',')[0].strip())
+    num2 = int(s.split(',')[1].strip())
+    ...
+except (ValueError, IndexError) as err:
+    print('Error: {}'.format(err))
+
+print('continue')
+...
+
+```
+
+方式 2：
+
+```python
+try:
+    s = input('please enter two numbers separated by comma: ')
+    num1 = int(s.split(',')[0].strip())
+    num2 = int(s.split(',')[1].strip())
+    ...
+except ValueError as err:
+    print('Value Error: {}'.format(err))
+except IndexError as err:
+    print('Index Error: {}'.format(err))
+
+print('continue')
+...
+
+```
+
+若无法保证覆盖所有的异常类型，那么在最后的异常块，声明其处理的异常类型是`exception`
+`exception`是所有其他异常的基类  
+eg:
+
+```python
+try:
+    s = input('please enter two numbers separated by comma: ')
+    num1 = int(s.split(',')[0].strip())
+    num2 = int(s.split(',')[1].strip())
+    ...
+except ValueError as err:
+    print('Value Error: {}'.format(err))
+except IndexError as err:
+    print('Index Error: {}'.format(err))
+except Exception as err:
+    print('Other error: {}'.format(err))
+
+print('continue')
+...
+
+```
+
+或者可以在 `except` 后面省略异常类型
+
+```python
+try:
+    s = input('please enter two numbers separated by comma: ')
+    num1 = int(s.split(',')[0].strip())
+    num2 = int(s.split(',')[1].strip())
+    ...
+except ValueError as err:
+    print('Value Error: {}'.format(err))
+except IndexError as err:
+    print('Index Error: {}'.format(err))
+except:
+    print('Other error')
+
+print('continue')
+...
+
+```
+
+当程序中存在多个 except 时，最多只有一个 except 会被执行。  
+若异常类型与实际相匹配，只有最前面的异常块会被执行，之后的会被忽略（找到最前面的与之匹配的异常块，然后的抛弃)  
+实际的应用场景，文件读取  
+eg：
+
+```python
+import sys
+try:
+    f = open('file.txt', 'r')
+    .... # some data processing
+except OSError as err:
+    print('OS error: {}'.format(err))
+except:
+    print('Unexpected error:', sys.exc_info()[0])
+finally:
+    f.close()
+
+```
+
+这段代码中，try block 尝试读取 file.txt 这个文件，并对其中的数据进行一系列的处理，到最后，无论是读取成功还是读取失败，程序都会执行 finally 中的语句——关闭这个文件流，确保文件的完整性。因此，在 finally 中，我们通常会放一些无论如何都要执行的语句
+
+此处可能更好的办法是使用 `with`
+
+#### 8.1 用户自定义异常
+
+eg:
+
+```python
+class MyInputError(Exception):
+    """Exception raised when there're errors in input"""
+    def __init__(self, value): # 自定义异常类型的初始化
+        self.value = value
+    def __str__(self): # 自定义异常类型的 string 表达形式
+        return ("{} is invalid input".format(repr(self.value)))
+
+try:
+    raise MyInputError(1) # 抛出 MyInputError 这个异常
+except MyInputError as err:
+    print('error: {}'.format(err))
+
+```
+
+### 九、自定义函数
+
+对于嵌套函数的作用：
+
+- 9.1
+- 第一，函数的嵌套能够保证内部函数的隐私。内部函数只能被外部函数所调用和访问，不会暴露在全局作用域，因此，如果你的函数内部有一些隐私数据（比如数据库的用户、密码等），不想暴露在外，那你就可以使用函数的的嵌套，将其封装在内部函数中，只通过外部函数来访问。```比如：
+
+```python
+def connect_DB():
+    def get_DB_configuration():
+        ...
+        return host, username, password
+    conn = connector.connect(get_DB_configuration())
+    return conn
+
+```
+
+- 9.2 合理的使用函数嵌套，能够提高程序的运行效率。
+
+```python
+def factorial(input):
+    # validation check
+    if not isinstance(input, int):
+        raise Exception('input must be an integer.')
+    if input < 0:
+        raise Exception('input must be greater or equal to 0' )
+    ...
+
+    def inner_factorial(input):
+        if input <= 1:
+            return 1
+        return input * inner_factorial(input-1)
+    return inner_factorial(input)
+
+
+print(factorial(5))
+
+```
+
+这里，我们使用递归的方式计算一个数的阶乘。因为在计算之前，需要检查输入是否合法，所以我写成了函数嵌套的形式，这样一来，输入是否合法就只用检查一次。而如果我们不使用函数嵌套，那么每调用一次递归便会检查一次，这是没有必要的，也会降低程序的运行效率。
+
+- 9.3 函数变量作用域
+  不能在函数内部随意改变全局变量的值
+  下面代码会报错
+
+```python
+MIN_VALUE = 1
+MAX_VALUE = 10
+def validation_check(value):
+    ...
+    MIN_VALUE += 1
+    ...
+validation_check(5)
+
+```
+
+这是因为，Python 的解释器会默认函数内部的变量为局部变量，但是又发现局部变量 MIN_VALUE 并没有声明，因此就无法执行相关操作。所以，如果我们一定要在函数内部改变全局变量的值，就必须加上 global 这个声
+
+```python
+MIN_VALUE = 1
+MAX_VALUE = 10
+def validation_check(value):
+    global MIN_VALUE
+    ...
+    MIN_VALUE += 1
+    ...
+validation_check(5)
+
+```
+
+类似的，对于嵌套函数来说，内部函数可以访问外部函数定义的变量，但是无法修改，若要修改，必须加上 nonlocal 这个关键字：
+
+```python
+def outer():
+    x = "local"
+    def inner():
+        nonlocal x # nonlocal 关键字表示这里的 x 就是外部函数 outer 定义的变量 x
+        x = 'nonlocal'
+        print("inner:", x)
+    inner()
+    print("outer:", x)
+outer()
+# 输出
+inner: nonlocal
+outer: nonlocal
+
+```
+
+如果不加上 nonlocal 这个关键字，而内部函数的变量又和外部函数变量同名，那么同样的，内部函数变量会覆盖外部函数的变量。
+
+-9.4 闭包

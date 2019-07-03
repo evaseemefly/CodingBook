@@ -921,3 +921,312 @@ outer: nonlocal
 如果不加上 nonlocal 这个关键字，而内部函数的变量又和外部函数变量同名，那么同样的，内部函数变量会覆盖外部函数的变量。
 
 -9.4 闭包
+
+### 10 匿名函数
+
+-10.1 匿名函数的定义
+
+```python
+lambda argument1, argument2,... argumentN : expression
+
+```
+
+简单的匿名函数：
+
+```python
+square = lambda x: x**2
+square(3)
+
+9
+
+```
+
+对应的方法：
+
+```python
+def square(x):
+    return x**2
+square(3)
+
+9
+
+```
+
+lambda 可用在常规函数不能用的地方，例如列表推导
+
+```python
+[(lambda x: x*x)(x) for x in range(10)]
+# 输出
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+```
+
+注意上面的 lambda 表达式实际是一个方法，所以后面要像调用函数一样的去调用（lamdba 表达式(参数))
+
+lambda 可以用作某些函数的参数，例如 sort
+
+```python
+l = [(1, 20), (3, 0), (9, 10), (2, -1)]
+l.sort(key=lambda x: x[1]) # 按列表中元祖的第二个元素排序
+print(l)
+# 输出
+[(2, -1), (3, 0), (9, 10), (1, 20)]
+
+```
+
+-10.2 lambda 主体只能是只有一行的简单表达式，而不能是多行的代码块（有一定的缺陷
+
+-10.3 使用匿名函数的场景
+(1) 减少代码的重复性
+(2) 模块化代码
+
+-10.4 python 中几个经常与匿名函数一起使用的函数：`map()`,`filter()`,`reduce()`
+(1) map
+首先是 map(function, iterable) 函数，前面的例子提到过，它表示，对 iterable 中的每个元素，都运用 function 这个函数，最后返回一个新的可遍历的集合。比如刚才列表的例子，要对列表中的每个元素乘以 2，那么用 map 就可以表示为下面这样：
+
+```python
+l = [1, 2, 3, 4, 5]
+new_list = map(lambda x: x * 2, l) # [2， 4， 6， 8， 10]
+
+```
+
+注意 map 比列表推导和 fo
+(2) filter
+接下来来看 filter(function, iterable) 函数，它和 map 函数类似，function 同样表示一个函数对象。filter() 函数表示对 iterable 中的每个元素，都使用 function 判断，并返回 True 或者 False，最后将返回 True 的元素组成一个新的可遍历的集合。
+
+```python
+l = [1, 2, 3, 4, 5]
+new_list = filter(lambda x: x % 2 == 0, l) # [2, 4]
+
+```
+
+(3)reduce
+function 同样是一个函数对象，规定它有两个参数，表示对 iterable 中的每个元素以及上一次调用后的结果，运用 function 进行计算，所以最后返回的是一个单独的数值。
+
+```python
+l = [1, 2, 3, 4, 5]
+product = reduce(lambda x, y: x * y, l) # 1*2*3*4*5 = 120
+
+```
+
+不过，如果你要对集合中的元素，做一些比较复杂的操作，那么，考虑到代码的可读性，我们通常会使用 for 循环，这样更加清晰明了。
+在数据量非常多的情况下，比如机器学习的应用，那我们一般更倾向于函数式编程的表示，因为效率更高；
+在数据量不多的情况下，并且你想要程序更加 Pythonic 的话，那么 list comprehension 也不失为一个好选择。
+
+对一个字典，根据值进行由高及低的排序，
+
+```python
+d = {'mike': 10, 'lucy': 2, 'ben': 30}
+sorted(d.items(), key=lambda x: x[1], reverse=True)
+```
+
+### 十一、面向对象
+
+```python
+class Document():
+    def __init__(self, title, author, context):
+        print('init function called')
+        self.title = title
+        self.author = author
+        self.__context = context # __ 开头的属性是私有属性
+
+    def get_context_length(self):
+        return len(self.__context)
+
+    def intercept_context(self, length):
+        self.__context = self.__context[:length]
+
+harry_potter_book = Document('Harry Potter', 'J. K. Rowling', '... Forever Do not believe any thing is capable of thinking independently ...')
+
+print(harry_potter_book.title)
+print(harry_potter_book.author)
+print(harry_potter_book.get_context_length())
+
+harry_potter_book.intercept_context(10)
+
+print(harry_potter_book.get_context_length())
+
+print(harry_potter_book.__context)
+
+########## 输出 ##########
+
+init function called
+Harry Potter
+J. K. Rowling
+77
+10
+
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-5-b4d048d75003> in <module>()
+     22 print(harry_potter_book.get_context_length())
+     23
+---> 24 print(harry_potter_book.__context)
+
+AttributeError: 'Document' object has no attribute '__context'
+
+```
+
+类：一群有着相似性的事物的集合，这里对应 Python 的 class。  
+对象：集合中的一个事物，这里对应由 class 生成的某一个 object，比如代码中的 harry_potter_book。  
+属性：对象的某个静态特征，比如上述代码中的 title、author 和 \_\_context。  
+函数：对象的某个动态能力，比如上述代码中的 intercept_context () 函数。
+
+```python
+class Document():
+
+    # 用大写来表示常量
+    WELCOME_STR = 'Welcome! The context for this book is {}.'
+
+    def __init__(self, title, author, context):
+        print('init function called')
+        self.title = title
+        self.author = author
+        self.__context = context
+
+    # 类函数
+    # 注意类函数的第一个参数通常命名为cls，表示传入一个类
+    @classmethod
+    def create_empty_book(cls, title, author):
+        return cls(title=title, author=author, context='nothing')
+
+    # 成员函数
+    def get_context_length(self):
+        return len(self.__context)
+
+    # 静态函数
+    # 静态函数与类并没有什么关联，所以第一个参数没有任何特殊性
+    @staticmethod
+    def get_welcome(context):
+        return Document.WELCOME_STR.format(context)
+
+
+empty_book = Document.create_empty_book('What Every Man Thinks About Apart from Sex', 'Professor Sheridan Simove')
+
+
+print(empty_book.get_context_length())
+print(empty_book.get_welcome('indeed nothing'))
+
+########## 输出 ##########
+
+init function called
+7
+Welcome! The context for this book is indeed nothing.
+
+```
+
+对于类变量，在内部可以通过`self.WELCOME_STR`的方式访问；  
+在外部可以通过 Entity.WELCOME_STR 的方式获取。
+对于类函数而言，常用的场景是用来实现不同的`init`构造函数，如上例所示.
+
+-10.2 继承
+继承类在被创建时，是不会自动调用父类的构造函数的。必须在`init`函数中显示的调用父类的构造函数。  
+调用的执行顺序是 子类 init->父类 init
+
+(1)
+
+```python
+class Entity():
+    def __init__(self, object_type):
+        print('parent class init called')
+        self.object_type = object_type
+
+    def get_context_length(self):
+        raise Exception('get_context_length not implemented')
+
+    def print_title(self):
+        print(self.title)
+
+class Document(Entity):
+    def __init__(self, title, author, context):
+        print('Document class init called')
+        Entity.__init__(self, 'document')
+        self.title = title
+        self.author = author
+        self.__context = context
+
+    def get_context_length(self):
+        return len(self.__context)
+
+class Video(Entity):
+    def __init__(self, title, author, video_length):
+        print('Video class init called')
+        Entity.__init__(self, 'video')
+        self.title = title
+        self.author = author
+        self.__video_length = video_length
+
+    def get_context_length(self):
+        return self.__video_length
+
+harry_potter_book = Document('Harry Potter(Book)', 'J. K. Rowling', '... Forever Do not believe any thing is capable of thinking independently ...')
+harry_potter_movie = Video('Harry Potter(Movie)', 'J. K. Rowling', 120)
+
+print(harry_potter_book.object_type)
+print(harry_potter_movie.object_type)
+
+harry_potter_book.print_title()
+harry_potter_movie.print_title()
+
+print(harry_potter_book.get_context_length())
+print(harry_potter_movie.get_context_length())
+
+########## 输出 ##########
+
+Document class init called
+parent class init called
+Video class init called
+parent class init called
+document
+video
+Harry Potter(Book)
+Harry Potter(Movie)
+77
+120
+
+```
+
+(2)抽象函数和抽象类：
+
+```python
+from abc import ABCMeta, abstractmethod
+
+class Entity(metaclass=ABCMeta):
+    @abstractmethod
+    def get_title(self):
+        pass
+
+    @abstractmethod
+    def set_title(self, title):
+        pass
+
+class Document(Entity):
+    def get_title(self):
+        return self.title
+
+    def set_title(self, title):
+        self.title = title
+
+document = Document()
+document.set_title('Harry Potter')
+print(document.get_title())
+
+entity = Entity()
+
+########## 输出 ##########
+
+Harry Potter
+
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-7-266b2aa47bad> in <module>()
+     21 print(document.get_title())
+     22
+---> 23 entity = Entity()
+     24 entity.set_title('Test')
+
+TypeError: Can't instantiate abstract class Entity with abstract methods get_title, set_title
+
+```
+
+抽象类是一种特殊的类，它生下来就是作为父类存在的，一旦对象化就会报错。同样，抽象函数定义在抽象类之中，子类必须重写该函数才能使用。相应的抽象函数，则是使用装饰器 @abstractmethod 来表示。

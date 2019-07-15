@@ -81,7 +81,8 @@ max_per_ip=4
 #不允许匿名用户访问，允许本地（系统）用户登录
 anonymous_enable=NO
 local_enable=YES
-write_enable=NO
+#注意此处必须改为YES，否则有问题
+write_enable=YES
 
 #是否采用端口20进行数据传输
 connect_from_port_20=YES
@@ -100,4 +101,11 @@ sudo /etc/init.d/vsftpd restart
 ```
 sudo /etc/init.d/vsftpd start
 sudo /etc/init.d/vsftpd stop
+```
+
+若出现无法上传的情况，需要将上面的`write_enable`改为`YES`    
+
+还需要查看被上传的目录下的各文件夹的权限：
+```
+sudo chmod -R 777 *
 ```

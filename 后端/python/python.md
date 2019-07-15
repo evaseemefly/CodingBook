@@ -922,6 +922,19 @@ outer: nonlocal
 
 -9.4 闭包
 
+-9.5 传递关键字参数（**kwargs）
+传递**kwargs参数至另一个函数中，再继续传递
+```python
+    def addChnameVariable(self, list_data, **kwargs) :
+        dict_names = self.getTyphoonChNameDict(**kwargs)
+    
+    def getTyphoonChNameDict(self, *args, **kwargs):
+        nums = kwargs.get('nums')
+
+    #外侧调用
+    list_dataFinal = self.addChnameVariable(list_data, nums=list_typhoonNum)
+```
+如上所示，再次传递时，仍需加上**，通过`**`前缀的字典，会被解压缩为关键字参数
 ### 10 匿名函数
 
 -10.1 匿名函数的定义

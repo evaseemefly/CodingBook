@@ -77,6 +77,17 @@ data: {
 <div v-bind:class="[isActive ? activeClass : '', errorClass]"></div>
 ```
 
+### 1.3 动态的改变宽度
+
+下面这种方式是`绑定内联样式`
+
+```js
+<div :style="'width:'+ num * 3.3 +'%;'"></div>
+<div :style="'width:'+ (100 - num * 3.3) +'%;'"></div>
+```
+
+- [ ] [可参考的文章](https://segmentfault.com/a/1190000010956974#articleHeader5)
+
 ### 1.3 css 作用域
 
 [部分摘自](https://www.w3cplus.com/vue/scoped-styles-vs-css-modules.html)
@@ -90,3 +101,22 @@ data: {
   上面我们看到的是 Vue 机制内作用域 CSS 的使用。在 Vue 中，除了作用域 CSS 之外，还有另外一种机制，那就是 CSS Modules，即模块化 CSS。
 
 - css Modules
+
+## 生命周期
+
+### 对于使用 v-for 进行列表渲染
+
+对于使用 v-for 进行渲染的 div，若相等 dom 元素加载完毕在执行可以使用`nextTick`
+
+```js
+<div class v-for="item in datelist" :key="item.id">{{item.dateStr()}}</div>
+
+@Watch("datelist")
+  onDateList(): void {
+    // 当监听到datelist发生变化时，等该dom渲染完毕后再执行
+    var myself = this;
+    this.$nextTick(function() {
+      // myself.initCuttingLinesClass();
+    });
+  }
+```

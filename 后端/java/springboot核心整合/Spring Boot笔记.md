@@ -498,9 +498,7 @@ public class Person {
 
 ![idea配置乱码](images/搜狗截图20180130161620.png)
 
-#### 2、@Value获取值和@ConfigurationProperties获取值比较  
-
-* 注意@CondigurationPreoperties默认是从全局配置文件中获取值
+#### 2、@Value获取值和@ConfigurationProperties获取值比较
 
 |            | @ConfigurationProperties | @Value |
 | ---------- | ------------------------ | ------ |
@@ -518,7 +516,7 @@ public class Person {
 
 
 
-#### 3、@Validated 对配置文件注入值数据校验
+#### 3、配置文件注入值数据校验
 
 ```java
 @Component
@@ -549,7 +547,7 @@ public class Person {
 
 
 
-#### 4、@PropertySource加载指定的配置文件&@ImportResource&@Bean
+#### 4、@PropertySource&@ImportResource&@Bean
 
 @**PropertySource**：加载指定的配置文件；
 
@@ -639,7 +637,7 @@ public class MyAppConfig {
 }
 ```
 
-## 4、配置文件占位符
+##4、配置文件占位符
 
 ### 1、随机数
 
@@ -661,7 +659,6 @@ person.boss=false
 person.maps.k1=v1
 person.maps.k2=14
 person.lists=a,b,c
-# 以下写法是若没有 person.hello,则使用:后面的值作为默认值
 person.dog.name=${person.hello:hello}_dog
 person.dog.age=15
 ```
@@ -678,9 +675,7 @@ person.dog.age=15
 
 
 
-### 2、yml支持多文档块方式(推荐)
-
-使用`---`对文档块进行划分
+### 2、yml支持多文档块方式
 
 ```yml
 
@@ -689,11 +684,7 @@ server:
 spring:
   profiles:
     active: prod
-# 若要激活 开发 环境
-spring:
-  profiles:
-  	active:dev
-  	
+
 ---
 server:
   port: 8083
@@ -741,11 +732,13 @@ springboot 启动会扫描以下位置的application.properties或者application
 
 –classpath:/
 
-**优先级由高到底**，高优先级的配置会覆盖低优先级的配置；
+优先级由高到底，高优先级的配置会覆盖低优先级的配置；
 
 SpringBoot会从这四个位置全部加载主配置文件；**互补配置**；
 
-我们还可以通过*spring.config.location*来改变默认的配置文件位置
+
+
+==我们还可以通过spring.config.location来改变默认的配置文件位置==
 
 **项目打包好以后，我们可以使用命令行参数的形式，启动项目的时候来指定配置文件的新位置；指定配置文件和默认加载的这些配置文件共同起作用形成互补配置；**
 
@@ -805,17 +798,17 @@ java -jar spring-boot-02-config-02-0.0.1-SNAPSHOT.jar --server.port=8087  --serv
 
 配置文件到底能写什么？怎么写？自动配置原理；
 
-**[配置文件能配置的属性参照](https://docs.spring.io/spring-boot/docs/1.5.9.RELEASE/reference/htmlsingle/#common-application-properties)**
+[配置文件能配置的属性参照](https://docs.spring.io/spring-boot/docs/1.5.9.RELEASE/reference/htmlsingle/#common-application-properties)
 
 
 
 ### 1、**自动配置原理：**
 
-1）、SpringBoot启动的时候加载主配置类，开启了自动配置功能 **@EnableAutoConfiguration**
+1）、SpringBoot启动的时候加载主配置类，开启了自动配置功能 ==@EnableAutoConfiguration==
 
 **2）、@EnableAutoConfiguration 作用：**
 
- -  利用**EnableAutoConfigurationImportSelector**给容器中导入一些组件？
+ -  利用EnableAutoConfigurationImportSelector给容器中导入一些组件？
 
 - 可以查看selectImports()方法的内容；
 
